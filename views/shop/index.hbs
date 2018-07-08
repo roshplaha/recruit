@@ -1,0 +1,26 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+
+{{# each products}}
+    <div class="row">
+        {{# each this }}
+                <div class="col-sm-6 col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top img-responsive mx-auto"
+                     src="{{ this.imagePath }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                </div>
+                <div class="card-body clear-fix">
+                    <div class="price float-left">£{{this.price}}</div>
+                    <a href="/add-to-cart/{{this._id}}" class="btn btn-success float-right">Add to cart</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+    Product!
+{{/each}}

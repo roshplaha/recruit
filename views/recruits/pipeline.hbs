@@ -1,0 +1,114 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+
+<div class="container-fluid">
+    <div class="row">
+        {{# each candidateStage}}
+            <div class="col-sm-2">
+                <div id="{{this.name}}" class="tbody-wrap drop {{this.name}}" ondrop="drop(event)"
+                     ondragover="allowDrop(event)">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">
+                                {{this.name}}
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="column-body {{this.name}}">
+                        {{# each data }}
+                            <tr>
+                                <td>
+                                    <div id="{{this._id}}" class="card text-white bg-primary mb-3 stage-{{this.stage}} card-drop"
+                                         style="max-width: 14rem;" draggable="true" ondragstart="drag(event)"
+                                         ondrop="drop(event)" ondragover="allowDrop(event)">
+                                        <div class="card-body stage-{{this.stage}} card-drop">
+                                            <h5 class="card-title stage-{{this.stage}} card-drop">{{this.lastName}}</h5>
+                                            <p class="card-text stage-{{this.stage}} card-drop">{{this.firstName}}</p>
+                                            <p class="card-text stage-{{this.stage}} card-drop">{{this.rank}}</p>
+                                            <p class="card-text stage-{{this.stage}} card-drop">{{this.interviewDate}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+<button>Get External Content</button>
+
+
+<script>
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+        console.log(ev.target.id);
+        console.log("@@@@@" + ev.dataTransfer.getData("text"));
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var idOfCard = ev.dataTransfer.getData("text");
+        var childElement = document.getElementById(idOfCard);
+
+        if ($(ev.target).hasClass("card-drop")) {           //inverse this to look for drop!
+
+            ev.target.classList.contains('stage-First-Stage')
+            console.log(" ! ! " + ev.target.classList.contains('stage-First-Stage'));
+
+            var x = document.getElementsByClassName("tbody-wrap drop ");
+
+        }
+
+        if ($(ev.target).hasClass("drop")) {
+            console.log("is droppable inside");
+            ev.target.appendChild(childElement);
+
+            var newStage = ev.target.id;
+            console.log("landed here " + newStage);
+            console.log("data id for card " + idOfCard);
+            updateCandidateStage(idOfCard, newStage);
+
+        }
+
+        //ev.target.appendChild(document.getElementById(data));
+    }
+
+    function updateCandidateStage(id, stage) {
+        $.ajax({
+            type: 'POST',
+            url: "/pa-recruitment/updateCandidateStage/" + id + "/" + stage,
+            data: {
+                "_csrf": "{{ csrfToken }}"
+            },
+            dataType: "text",
+            success: function (resultData) {
+                alert("Save Complete")
+            }
+        });
+    }
+
+    $("button").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: "/pa-recruitment/updateCandidateStage",
+            data: {
+                "_csrf": "{{ csrfToken }}"
+            },
+            dataType: "text",
+            success: function (resultData) {
+                alert("Save Complete")
+            }
+        });
+    });
+
+</script>
