@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -12,21 +13,27 @@
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-users-cog"></i> User Management
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {{# if login }}
-                        <a class="dropdown-item" href="/user/profile"><i class="fas fa-user"></i><i class="fas fa-users-cog"></i>User Account</a>
+                        <a class="dropdown-item" href="/user/profile"><i class="fas fa-user"></i><i
+                                class="fas fa-users-cog"></i>User Account</a>
                         <a class="dropdown-item" href="/user/logout">Log out</a>
                     {{ else }}
-                    <a class="dropdown-item" href="/user/signup"><i class="fas fa-user"></i><i class="fas fa-users-cog"></i>Sign up</a>
-                    <a class="dropdown-item" href="/user/signin">Sign in</a>
+                        <a class="dropdown-item" href="/user/signup"><i class="fas fa-user"></i><i
+                                class="fas fa-users-cog"></i>Sign up</a>
+                        <a class="dropdown-item" href="/user/signin">Sign in</a>
                     {{/if}}
                 </div>
             </li>
 
         </ul>
+
+        <a class="btn btn-outline-success my-2 my-sm-0" type="submit" href="/pa-recruitment/addCandidate">Add Candidate</a>
+
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

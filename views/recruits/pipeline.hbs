@@ -41,9 +41,6 @@
     </div>
 </div>
 
-<button>Get External Content</button>
-
-
 <script>
 
     function openApplicantEditor(id) {
@@ -84,7 +81,6 @@
 
         }
 
-        //ev.target.appendChild(document.getElementById(data));
     }
 
     function updateCandidateStage(id, stage) {
@@ -99,19 +95,5 @@
             }
         });
     }
-
-    $("button").click(function () {
-        $.ajax({
-            type: 'POST',
-            url: "/pa-recruitment/updateCandidateStage",
-            data: {
-                "_csrf": "{{ csrfToken }}"
-            },
-            dataType: "text",
-            success: function (resultData) {
-                alert("Save Complete")
-            }
-        });
-    });
 
 </script>

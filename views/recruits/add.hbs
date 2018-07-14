@@ -18,10 +18,16 @@
                 <label>Anticipated rank</label>
                 <input name="rank" class="form-control">
             </div>
-            <div class="form-group"> <!-- Date input -->
+            <div class="form-group">
                 <label class="control-label" for="date">Interview Date</label>
                 <input type="text" name="interviewdate"id="datepicker" class="form-control" >
             </div>
+
+            <div class="form-group">
+                <label for="exampleTextarea">Example textarea</label>
+                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+            </div>
+
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             <button type="submit" class="btn btn-primary">Add candidate</button>
         </form>
