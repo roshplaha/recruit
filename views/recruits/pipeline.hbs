@@ -20,16 +20,16 @@
                         {{# each data }}
                             <tr>
                                 <td>
-                                    <div id="{{this._id}}" class="card text-white bg-primary mb-3 stage-{{this.stage}} card-drop"
+                                    <a id="{{this._id}}" class="card text-white bg-primary mb-3 stage-{{this.stage}} card"
                                          style="max-width: 14rem;" draggable="true" ondragstart="drag(event)"
-                                         ondrop="drop(event)" ondragover="allowDrop(event)">
+                                         ondrop="drop(event)" ondragover="allowDrop(event)" ondblclick="openApplicantEditor('{{this._id}}')">
                                         <div class="card-body stage-{{this.stage}} card-drop">
                                             <h5 class="card-title stage-{{this.stage}} card-drop">{{this.lastName}}</h5>
                                             <p class="card-text stage-{{this.stage}} card-drop">{{this.firstName}}</p>
                                             <p class="card-text stage-{{this.stage}} card-drop">{{this.rank}}</p>
                                             <p class="card-text stage-{{this.stage}} card-drop">{{this.interviewDate}}</p>
                                         </div>
-                                    </div>
+                                    </a>
                                 </td>
                             </tr>
                         {{/each}}
@@ -45,6 +45,11 @@
 
 
 <script>
+
+    function openApplicantEditor(id) {
+        window.location.href = "/pa-recruitment/updateCandidate/" + id;
+    }
+
     function allowDrop(ev) {
         ev.preventDefault();
     }
@@ -52,7 +57,6 @@
     function drag(ev) {
         ev.dataTransfer.setData("text", ev.target.id);
         console.log(ev.target.id);
-        console.log("@@@@@" + ev.dataTransfer.getData("text"));
     }
 
     function drop(ev) {
@@ -92,7 +96,6 @@
             },
             dataType: "text",
             success: function (resultData) {
-                alert("Save Complete")
             }
         });
     }

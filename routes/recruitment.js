@@ -36,7 +36,7 @@ router.post('/updateCandidateStage/:id/:stage', function (req, res, next) {
     var id = req.params.id;
     var newStage = req.params.stage;
 
-    console.log("Got an update request " + id + " " + newStage);
+    console.log("Got an update request for id " + id + " to go to " + newStage);
 
     Candidate.findById(id, function (err, candidate) {
         if (err) return handleError(err);
@@ -49,6 +49,36 @@ router.post('/updateCandidateStage/:id/:stage', function (req, res, next) {
     res.redirect('/');
 });
 
+router.post('/updateCandidate/:id', function (req, res, next) {
+    var id = req.params.id;
+    console.log("This is the id " + id);
+    Candidate.findById(id, function (err, candidate) {
+
+        candidate.firstName = req.body.firstname;
+        candidate.lastName = req.body.lastname;
+        candidate.rank = req.body.rank;
+        candidate.interviewDate = req.body.interviewdate;
+
+        candidate.save(function (err, updatedCandidate) {
+            if (err) return handleError(err);
+        });
+    });
+
+    res.redirect("/pa-recruitment/pipeline");
+});
+
+
+router.get('/updateCandidate/:id', isLoggedIn, function (req, res, next) {
+    var id = req.params.id;
+    console.log("Updating candidate details so need to pull there details to the screen using id: " + id);
+
+    Candidate.findById(id, function (err, candidate) {
+        if (err) return handleError(err);
+
+        console.log("Candidate details are: " + candidate);
+        res.render('recruits/updateCandidate', {csrfToken: req.csrfToken(), candidateDetails: candidate});
+    });
+});
 
 router.get('/pipeline', isLoggedIn, function (req, res, next) {
     Candidate.find(function (err, docs) {
@@ -58,35 +88,35 @@ router.get('/pipeline', isLoggedIn, function (req, res, next) {
         var chunks = 'chunks';
         chunks = [];
 
-        var first = docs.filter(d=>d.stage===stage.FIRST_STAGE);
+        var first = docs.filter(d => d.stage === stage.FIRST_STAGE);
         var first_stage = {
             name: stage.FIRST_STAGE,
             data: first
         };
         chunks.push(first_stage);
 
-        var second = docs.filter(d=>d.stage===stage.SECOND_STAGE);
+        var second = docs.filter(d => d.stage === stage.SECOND_STAGE);
         var second_stage = {
             name: stage.SECOND_STAGE,
             data: second
         };
         chunks.push(second_stage);
 
-        var rejected = docs.filter(d=>d.stage===stage.REJECTED_STAGE);
+        var rejected = docs.filter(d => d.stage === stage.REJECTED_STAGE);
         var rejected_stage = {
             name: stage.REJECTED_STAGE,
             data: rejected
         };
         chunks.push(rejected_stage);
 
-        var offer = docs.filter(d=>d.stage===stage.OFFER_STAGE);
+        var offer = docs.filter(d => d.stage === stage.OFFER_STAGE);
         var offer_stage = {
             name: stage.OFFER_STAGE,
             data: offer
         };
         chunks.push(offer_stage);
 
-        var accepted = docs.filter(d=>d.stage===stage.ACCEPTED_STAGE);
+        var accepted = docs.filter(d => d.stage === stage.ACCEPTED_STAGE);
         var accepted_stage = {
             name: stage.ACCEPTED_STAGE,
             data: accepted
