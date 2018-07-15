@@ -5,6 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var expresshbs = require('express-handlebars');
 var mongoose = require('mongoose');
+
+var elasticSearchClient = require('./models/connection'); // new
+
 var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
@@ -16,6 +19,7 @@ var userRouter = require('./routes/user');
 var recruitmentRouter = require('./routes/recruitment');
 
 var app = express();
+
 
 mongoose.connect('mongodb://localhost:27017/shopping');
 require('./config/passport');

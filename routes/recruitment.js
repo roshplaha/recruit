@@ -3,6 +3,7 @@ var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
 var stage = require('../constants/stage');
+var jobProfile = require('../models/jobProfile');
 
 var csrfProtection = csrf();
 router.use(csrfProtection);
@@ -28,6 +29,7 @@ router.post('/addCandidate', isLoggedIn, function (req, res, next) {
     candidate.save(function (err, candidate) {
         if (err) return console.error(err);
     });
+
     console.log("saved candidate entry to db: " + candidate);
     res.redirect('/');
 });
@@ -67,18 +69,34 @@ router.post('/updateCandidate/:id', function (req, res, next) {
     res.redirect("/pa-recruitment/pipeline");
 });
 
-
 router.get('/updateCandidate/:id', isLoggedIn, function (req, res, next) {
     var id = req.params.id;
     console.log("Updating candidate details so need to pull there details to the screen using id: " + id);
 
+    doStuff(id, function(err, candidate) {
+        console.log("ACandidate details are: " + candidate);
+
+        //pass candidate key words here
+
+        var profile  = new jobProfile();
+        profile.queryAgainstKeyWords("Java", function(er, resp) {
+
+            res.render('recruits/updateCandidate', {csrfToken: req.csrfToken(), candidateDetails: candidate});
+        });
+
+
+    });
+
+});
+
+
+var doStuff = function(id, fn) {
     Candidate.findById(id, function (err, candidate) {
         if (err) return handleError(err);
-
-        console.log("Candidate details are: " + candidate);
-        res.render('recruits/updateCandidate', {csrfToken: req.csrfToken(), candidateDetails: candidate});
+        fn(null, candidate);
     });
-});
+};
+
 
 router.get('/pipeline', isLoggedIn, function (req, res, next) {
     Candidate.find(function (err, docs) {
