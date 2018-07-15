@@ -10,7 +10,7 @@ module.exports = function JobProfile() {
             body: {
                 query: {
                     match: {
-                        "JobBody": "amazon javascript"
+                        "JobBody": words
                     }
                 }
             }

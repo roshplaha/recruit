@@ -11,7 +11,8 @@ var candidates = [
         rank: 'CONSULTANT',
         interviewDate: '10/10/2018',
         stage: 'OFFER',
-        daysInSystem: 0
+        daysInSystem: 0,
+        keySkills: "node amazon big-data"
     })
 ];
 

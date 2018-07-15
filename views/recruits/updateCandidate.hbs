@@ -20,6 +20,10 @@
                 <label class="control-label" for="date">Interview Date</label>
                 <input type="text" name="interviewdate"id="datepicker" value="{{candidateDetails.interviewDate}}" class="form-control" >
             </div>
+            <div class="form-group">
+                <label for="textarea">Key technologies and skills</label>
+                <textarea class="form-control" name="keyskills" id="keyskills" rows="4">{{candidateDetails.keySkills}}</textarea>
+            </div>
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             <button type="submit" class="btn btn-primary">Update candidate</button>
         </form>

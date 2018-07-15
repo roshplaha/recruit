@@ -2,9 +2,7 @@
 <div class="row">
     <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
         <h1>Add new Candidate</h1>
-        <div id="charge-error" class="alert alert-danger {{#if noError}}hidden{{/if}}">
-            {{errMsg}}
-        </div>
+
         <form action="/pa-recruitment/addCandidate" method="post">
             <div class="form-group">
                 <label>First name</label>
@@ -20,12 +18,12 @@
             </div>
             <div class="form-group">
                 <label class="control-label" for="date">Interview Date</label>
-                <input type="text" name="interviewdate"id="datepicker" class="form-control" >
+                <input type="text" name="interviewdate" id="datepicker" class="form-control" >
             </div>
 
             <div class="form-group">
-                <label for="exampleTextarea">Example textarea</label>
-                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                <label for="textarea">Key technologies and skills</label>
+                <textarea class="form-control" name="keyskills" id="keyskills" rows="4"></textarea>
             </div>
 
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">

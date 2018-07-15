@@ -23,7 +23,8 @@ router.post('/addCandidate', isLoggedIn, function (req, res, next) {
         rank: req.body.rank,
         interviewDate: req.body.interviewdate,
         stage: stage.FIRST_STAGE,
-        daysInSystem: 0
+        daysInSystem: 0,
+        keySkills: req.body.keyskills
     });
 
     candidate.save(function (err, candidate) {
@@ -60,6 +61,7 @@ router.post('/updateCandidate/:id', function (req, res, next) {
         candidate.lastName = req.body.lastname;
         candidate.rank = req.body.rank;
         candidate.interviewDate = req.body.interviewdate;
+        candidate.keySkills = req.body.keyskills;
 
         candidate.save(function (err, updatedCandidate) {
             if (err) return handleError(err);

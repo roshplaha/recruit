@@ -7,7 +7,8 @@ var schema  = new Schema({
    stage: {type: String, required: true},
    rank: {type: String, required: true},
    interviewDate: {type: Date, required: true},
-   daysInSystem: {type: Number, required: true}
+   daysInSystem: {type: Number, required: true},
+   keySkills: {type: String, required: true}
 });
 
 module.exports = mongoose.model('Candidate', schema);
