@@ -76,12 +76,13 @@ router.get('/updateCandidate/:id', isLoggedIn, function (req, res, next) {
     console.log("Updating candidate details so need to pull there details to the screen using id: " + id);
 
     doStuff(id, function(err, candidate) {
-        console.log("ACandidate details are: " + candidate);
+        console.log("Candidate details are: " + candidate);
 
         //pass candidate key words here
 
+        var candidateKeySkills = candidate.keySkills;
         var profile  = new jobProfile();
-        profile.queryAgainstKeyWords("Java", function(er, resp) {
+        profile.queryAgainstKeyWords(candidateKeySkills, function(er, resp) {
 
             res.render('recruits/updateCandidate', {csrfToken: req.csrfToken(), candidateDetails: candidate});
         });
