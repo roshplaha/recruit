@@ -78,13 +78,17 @@ router.get('/updateCandidate/:id', isLoggedIn, function (req, res, next) {
     doStuff(id, function(err, candidate) {
         console.log("Candidate details are: " + candidate);
 
-        //pass candidate key words here
 
         var candidateKeySkills = candidate.keySkills;
         var profile  = new jobProfile();
         profile.queryAgainstKeyWords(candidateKeySkills, function(er, resp) {
 
-            res.render('recruits/updateCandidate', {csrfToken: req.csrfToken(), candidateDetails: candidate});
+            var maxScore = resp.hits.max_score;
+            console.log("the max " + JSON.stringify(maxScore));
+            var bestResponse = resp.hits.hits.filter(h => h._score === maxScore);
+
+            var result = JSON.stringify(bestResponse).slice(1, -1);
+            res.render('recruits/updateCandidate', {csrfToken: req.csrfToken(), candidateDetails: candidate, bestJobMatch : JSON.parse(result)});
         });
 
 

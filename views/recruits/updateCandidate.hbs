@@ -30,6 +30,16 @@
     </div>
 </div>
 
+<div class="card">
+    <div class="card-header">
+        The most relevant job for this candidate is the <b>{{bestJobMatch._source.JobName}}</b>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">The role is for a {{bestJobMatch._source.JobType}}</h5>
+        <p class="card-text">The following skills are needed: {{bestJobMatch._source.JobBody}}</p>
+    </div>
+</div>
+
 <script>
 $( function() {
     $( "#datepicker" ).datepicker();
