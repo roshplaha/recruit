@@ -6,7 +6,7 @@ var logger = require('morgan');
 var expresshbs = require('express-handlebars');
 var mongoose = require('mongoose');
 
-var elasticSearchClient = require('./models/connection'); // new
+var elasticSearchClient = require('./models/connection');
 
 var session = require('express-session');
 var passport = require('passport');
@@ -45,7 +45,10 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static('public'));
+
 
 app.use(function(req, res, next) {
     console.log('club');
