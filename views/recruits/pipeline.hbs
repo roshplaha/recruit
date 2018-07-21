@@ -20,11 +20,22 @@
                         {{# each data }}
                             <tr>
                                 <td>
-                                    <a id="{{this._id}}" class="card text-white bg-primary mb-3 stage-{{this.stage}} card"
+                                    <!--<a id="{{this._id}}" class="card text-white bg-primary mb-3 stage-{{this.stage}} card"
                                          style="max-width: 14rem;" draggable="true" ondragstart="drag(event)"
                                          ondrop="drop(event)" ondragover="allowDrop(event)" ondblclick="openApplicantEditor('{{this._id}}')">
                                         <div class="card-body stage-{{this.stage}} card-drop">
                                             <h5 class="card-title stage-{{this.stage}} card-drop">{{this.lastName}}</h5>
+                                            <p class="card-text stage-{{this.stage}} card-drop">{{this.firstName}}</p>
+                                            <p class="card-text stage-{{this.stage}} card-drop">{{this.rank}}</p>
+                                            <p class="card-text stage-{{this.stage}} card-drop">{{this.interviewDate}}</p>
+                                        </div>
+                                    </a>-->
+                                    <a id="{{this._id}}" class="card border-warning mb-3 stage-{{this.stage}}" style="max-width: 18rem;"
+                                       draggable="true" ondragstart="drag(event)"
+                                       ondrop="drop(event)" ondragover="allowDrop(event)" ondblclick="openApplicantEditor('{{this._id}}')">
+                                        <div class="card-header stage-{{this.stage}}">{{this.lastName}}</div>
+                                        <div class="card-body text-warning stage-{{this.stage}}">
+                                            <h5 class="card-title stage-{{this.stage}}">Warning card title</h5>
                                             <p class="card-text stage-{{this.stage}} card-drop">{{this.firstName}}</p>
                                             <p class="card-text stage-{{this.stage}} card-drop">{{this.rank}}</p>
                                             <p class="card-text stage-{{this.stage}} card-drop">{{this.interviewDate}}</p>
@@ -61,9 +72,9 @@
         var idOfCard = ev.dataTransfer.getData("text");
         var childElement = document.getElementById(idOfCard);
 
-        if ($(ev.target).hasClass("card-drop")) {           //inverse this to look for drop!
+        if ($(ev.target).hasClass("card-drop")) {
 
-            ev.target.classList.contains('stage-First-Stage')
+            ev.target.classList.contains('stage-First-Stage');
             console.log(" ! ! " + ev.target.classList.contains('stage-First-Stage'));
 
             var x = document.getElementsByClassName("tbody-wrap drop ");
