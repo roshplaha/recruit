@@ -4,6 +4,7 @@ var csrf = require('csurf');
 var passport = require('passport');
 var stage = require('../constants/stage');
 var jobProfile = require('../models/jobProfile');
+var moment = require('moment');
 
 var csrfProtection = csrf();
 router.use(csrfProtection);
@@ -21,7 +22,7 @@ router.post('/addCandidate', isLoggedIn, function (req, res, next) {
         firstName: req.body.firstname,
         lastName: req.body.lastname,
         rank: req.body.rank,
-        interviewDate: req.body.interviewdate,
+        interviewDate: req.body.interviewdate, //mongoose saves dates in a long full format e.g. Fri Sep 16 2011 19:05:17 GMT+0900 (BST)
         stage: stage.FIRST_STAGE,
         daysInSystem: 0,
         keySkills: req.body.keyskills
@@ -76,10 +77,9 @@ router.get('/updateCandidate/:id', isLoggedIn, function (req, res, next) {
     console.log("Updating candidate details so need to pull there details to the screen using id: " + id);
 
     doStuff(id, function(err, candidate) {
-        console.log("Candidate details are: " + candidate);
-
 
         var candidateKeySkills = candidate.keySkills;
+
         var profile  = new jobProfile();
         profile.queryAgainstKeyWords(candidateKeySkills, function(er, resp) {
 
@@ -107,8 +107,6 @@ var doStuff = function(id, fn) {
 
 router.get('/pipeline', isLoggedIn, function (req, res, next) {
     Candidate.find(function (err, docs) {
-
-        //var o = {}; // empty Object
 
         var chunks = 'chunks';
         chunks = [];
