@@ -98,19 +98,13 @@ router.get('/updateCandidate/:id', isLoggedIn, function (req, res, next) {
                 });
                 return;
             }
-            console.log("Carry on then son");
-            console.log("the max " + JSON.stringify(maxScore));
+
             var bestResponse = resp.hits.hits.filter(h => h._score === maxScore);
-
-            console.log("Size:" + bestResponse.length);
-            console.log("Content:" + JSON.stringify(bestResponse));
-
-            bestResponse = bestResponse[0]; // get first for now if (even if more than 1 item returned)
 
             res.render('recruits/updateCandidate', {
                 csrfToken: req.csrfToken(),
                 candidateDetails: candidate,
-                bestJobMatch: bestResponse
+                bestJobMatch: bestResponse[0] // get first for now if (even if more than 1 item returned)
             });
         });
 
