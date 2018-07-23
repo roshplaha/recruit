@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
         <h1>Update Candidate Details</h1>
@@ -6,23 +5,26 @@
         <form action="/pa-recruitment/updateCandidate/{{candidateDetails._id}}" method="post">
             <div class="form-group">
                 <label>First name</label>
-                <input type="text" name="firstname" value="{{candidateDetails.firstName}}" class="form-control">
+                <input type="text" name="firstname" value="{{candidateDetails.firstName}}" class="form-control"
+                       required>
             </div>
             <div class="form-group">
                 <label>Last name</label>
-                <input type="text" name="lastname" value="{{candidateDetails.lastName}}" class="form-control">
+                <input type="text" name="lastname" value="{{candidateDetails.lastName}}" class="form-control" required>
             </div>
             <div class="form-group">
                 <label>Anticipated rank</label>
-                <input name="rank" value="{{candidateDetails.rank}}" class="form-control">
+                <input name="rank" value="{{candidateDetails.rank}}" class="form-control" required>
             </div>
             <div class="form-group"> <!-- Date input -->
                 <label class="control-label" for="date">Interview Date</label>
-                <input type="text" name="interviewdate"id="datepicker" value=" {{candidateDetails.interviewDate}}" class="form-control" >
+                <input type="text" name="interviewdate" id="datepicker" value=" {{candidateDetails.interviewDate}}"
+                       class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="textarea">Key technologies and skills</label>
-                <textarea class="form-control" name="keyskills" id="keyskills" rows="4">{{candidateDetails.keySkills}}</textarea>
+                <textarea class="form-control" name="keyskills" id="keyskills" rows="4"
+                          required>{{candidateDetails.keySkills}}</textarea>
             </div>
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             <button type="submit" class="btn btn-primary">Update candidate</button>
@@ -30,19 +32,26 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">
-        The most relevant job for this candidate is the <b>{{bestJobMatch._source.JobName}}</b>
+
+{{#if bestJobMatch}}
+    <div class="card">
+        <div class="card-header">
+            The most relevant job for this candidate is the <b>{{bestJobMatch._source.JobName}}</b>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">The role is for a {{bestJobMatch._source.JobType}}</h5>
+            <p class="card-text">The following skills are needed: {{bestJobMatch._source.JobBody}}</p>
+        </div>
     </div>
-    <div class="card-body">
-        <h5 class="card-title">The role is for a {{bestJobMatch._source.JobType}}</h5>
-        <p class="card-text">The following skills are needed: {{bestJobMatch._source.JobBody}}</p>
+{{else}}
+    <div class="alert alert-warning" role="alert">
+        Ooops, we couldnt find any job matches for {{candidateDetails.firstName}}. Try refining the skills input above!
     </div>
-</div>
+{{/if}}
 
 <script>
-$( function() {
-    $( "#datepicker" ).datepicker();
-} );
+    $(function () {
+        $("#datepicker").datepicker();
+    });
 
 </script>

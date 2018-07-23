@@ -13,7 +13,11 @@ var Candidate = require('../models/candidate');
 
 
 router.get('/addCandidate', isLoggedIn, function (req, res, next) {
-    res.render('recruits/add', {csrfToken: req.csrfToken()});
+
+    var roles = ['Analyst', 'Consultant Analyst', 'Consultant', 'Principle Consultant', 'Management Consultant', 'Director', 'Partner'];
+    console.log("ROLES: " + JSON.stringify(roles));
+
+    res.render('recruits/add', {csrfToken: req.csrfToken(), availableRoles: roles});
 });
 
 router.post('/addCandidate', isLoggedIn, function (req, res, next) {
@@ -76,28 +80,46 @@ router.get('/updateCandidate/:id', isLoggedIn, function (req, res, next) {
     var id = req.params.id;
     console.log("Updating candidate details so need to pull there details to the screen using id: " + id);
 
-    doStuff(id, function(err, candidate) {
+    doStuff(id, function (err, candidate) {
 
         var candidateKeySkills = candidate.keySkills;
 
-        var profile  = new jobProfile();
-        profile.queryAgainstKeyWords(candidateKeySkills, function(er, resp) {
+        var profile = new jobProfile();
+        profile.queryAgainstKeyWords(candidateKeySkills, function (er, resp) {
 
             var maxScore = resp.hits.max_score;
+
+            if (maxScore == null) { //must be no result
+                console.log("hello there");
+                res.render('recruits/updateCandidate', {
+                    csrfToken: req.csrfToken(),
+                    candidateDetails: candidate,
+                    bestJobMatch: null
+                });
+                return;
+            }
+            console.log("Carry on then son");
             console.log("the max " + JSON.stringify(maxScore));
             var bestResponse = resp.hits.hits.filter(h => h._score === maxScore);
 
-            var result = JSON.stringify(bestResponse).slice(1, -1);
-            res.render('recruits/updateCandidate', {csrfToken: req.csrfToken(), candidateDetails: candidate, bestJobMatch : JSON.parse(result)});
-        });
+            console.log("Size:" + bestResponse.length);
+            console.log("Content:" + JSON.stringify(bestResponse));
 
+            bestResponse = bestResponse[0]; // get first for now if (even if more than 1 item returned)
+
+            res.render('recruits/updateCandidate', {
+                csrfToken: req.csrfToken(),
+                candidateDetails: candidate,
+                bestJobMatch: bestResponse
+            });
+        });
 
     });
 
-});
+})
+;
 
-
-var doStuff = function(id, fn) {
+var doStuff = function (id, fn) {
     Candidate.findById(id, function (err, candidate) {
         if (err) return handleError(err);
         fn(null, candidate);
@@ -157,7 +179,6 @@ router.use('/', notLoggedIn, function (req, res, next) {
 });
 
 module.exports = router;
-
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
