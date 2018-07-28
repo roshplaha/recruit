@@ -6,7 +6,7 @@ lib-cov
 *.out
 *.pid
 *.gz
-
+resources/recruit.pem
 pids
 logs
 results

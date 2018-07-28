@@ -11,6 +11,11 @@ router.use(csrfProtection);
 
 var Candidate = require('../models/candidate');
 
+router.get('/addJobProfile', isLoggedIn, function (req, res, next) {
+    console.log("Request Job Profile page");
+    res.render('jobs/add', {csrfToken: req.csrfToken()});
+});
+
 
 router.get('/addCandidate', isLoggedIn, function (req, res, next) {
 

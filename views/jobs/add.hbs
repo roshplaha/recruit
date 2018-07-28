@@ -1,0 +1,22 @@
+<div>
+    <h1>Add new Job Profile</h1>
+
+    <form action="/pa-recruitment/updateCandidate/{{candidateDetails._id}}" method="post">
+        <div class="form-group col-sm-6 col-md-4">
+            <label>Client name</label>
+            <input type="text" name="firstname" class="form-control"
+                   required>
+        </div>
+        <div class="form-group col-sm-6 col-md-4">
+            <label>Job role</label>
+            <input type="text" name="lastname" class="form-control" required>
+        </div>
+        <div class="form-group form-group col-sm-8">
+            <label for="textarea">Tell us about the key skills for the job. Try and keep it concise!</label>
+            <textarea class="form-control" name="keyskills" id="keyskills" rows="8"
+                      required></textarea>
+        </div>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <button type="submit" class="btn btn-success">Add job profile</button>
+    </form>
+</div>

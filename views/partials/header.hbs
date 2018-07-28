@@ -11,12 +11,11 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                    data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-users-cog"></i> User Management
+                    <i class="fas fa-users-cog"></i> User
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {{# if login }}
-                        <a class="dropdown-item" href="/user/profile"><i class="fas fa-user"></i><i
-                                class="fas fa-users-cog"></i>User Account</a>
+                        <a class="dropdown-item" href="/user/profile">User Account</a>
                         <a class="dropdown-item" href="/user/logout">Log out</a>
                     {{ else }}
                         <a class="dropdown-item" href="/user/signup"><i class="fas fa-user"></i><i
