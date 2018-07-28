@@ -3,7 +3,10 @@ var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
 var stage = require('../constants/stage');
-var jobProfile = require('../models/jobProfile');
+
+//todo removed
+//var jobProfile = require('../models/jobProfile');
+
 var moment = require('moment');
 
 var csrfProtection = csrf();
@@ -87,30 +90,9 @@ router.get('/updateCandidate/:id', isLoggedIn, function (req, res, next) {
 
     doStuff(id, function (err, candidate) {
 
-        var candidateKeySkills = candidate.keySkills;
-
-        var profile = new jobProfile();
-        profile.queryAgainstKeyWords(candidateKeySkills, function (er, resp) {
-
-            var maxScore = resp.hits.max_score;
-
-            if (maxScore == null) { //must be no result
-                console.log("hello there");
-                res.render('recruits/updateCandidate', {
-                    csrfToken: req.csrfToken(),
-                    candidateDetails: candidate,
-                    bestJobMatch: null
-                });
-                return;
-            }
-
-            var bestResponse = resp.hits.hits.filter(h => h._score === maxScore);
-
-            res.render('recruits/updateCandidate', {
-                csrfToken: req.csrfToken(),
-                candidateDetails: candidate,
-                bestJobMatch: bestResponse[0] // get first for now if (even if more than 1 item returned)
-            });
+        res.render('recruits/updateCandidate', {
+            csrfToken: req.csrfToken(),
+            candidateDetails: candidate
         });
 
     });
