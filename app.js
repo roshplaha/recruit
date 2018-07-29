@@ -21,7 +21,7 @@ var recruitmentRouter = require('./routes/recruitment');
 var app = express();
 
 
-mongoose.connect('mongodb://localhost:27017/shopping', {autoIndex: false});
+mongoose.connect('mongodb://localhost:27017/shopping?retryWrites=false', {autoIndex: false});
 require('./config/passport');
 
 // view engine setup
