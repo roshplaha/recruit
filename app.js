@@ -22,7 +22,7 @@ var app = express();
 
 
 //mongoose.connect('mongodb://localhost:27017/shopping', {autoIndex: false});
-mongoose.connect('mongodb://roshy:password@ec2-18-130-227-19.eu-west-2.compute.amazonaws.com:27017/dummyDB');
+mongoose.connect('mongodb://roshy:password@localhost:27017/dummyDB');
 
 
 
