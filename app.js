@@ -6,8 +6,6 @@ var logger = require('morgan');
 var expresshbs = require('express-handlebars');
 var mongoose = require('mongoose');
 
-//var elasticSearchClient = require('./models/connection');
-
 var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
@@ -20,10 +18,9 @@ var recruitmentRouter = require('./routes/recruitment');
 
 var app = express();
 
-
-//mongoose.connect('mongodb://localhost:27017/shopping', {autoIndex: false});
-mongoose.connect('mongodb://roshy:password@localhost:27017/dummyDB');
-
+var mongo = require('./models/mongo-connect');
+var mongi = new mongo();
+mongi.start()
 
 
 require('./config/passport');
